@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<history>
+   <processor signature="arm-none-eabi-gcc 3.4.2 mingw32 -mcpu=cortex-m4 -mthumb -Wall -ffunction-sections -g -O0 -c -DSTM32F407VG -DSTM32F4XX -DUSE_STDPERIPH_DRIVER -D__ASSEMBLY__ -I..\..\..\..\..\Users\Win\Downloads\ub_stm32f4_irmp_v100\ub_lib\irmp_lolevel -I..\..\..\..\..\Users\Win\Downloads\ub_stm32f4_irmp_v100\ub_lib -I..\..\..\workspace\test -I..\..\..\workspace -I..\..\..\..\..\Users\Win\Downloads\ub_stm32f4_irmp_v100 -I..\..\..\..\..\Users\Win -I..\..\..\..\..\Users\Win\Downloads -I..\..\..\workspace\test\cmsis -I..\..\..\workspace\test\cmsis_lib\include -I..\..\..\workspace\test\cmsis_lib -I..\..\..\workspace\test\cmsis_boot">
+      <target file="stm32f4xx_gpio.o" lastModified="15b2e18d55e">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_gpio.c" lastModified="15881502a1e"/>
+      </target>
+      <target file="stm32f4xx_adc.o" lastModified="15b2e18d4b0">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_adc.c" lastModified="159d9ff2af4"/>
+      </target>
+      <target file="irmp.o" lastModified="15b2e62eec9">
+         <source file="..\..\..\..\..\..\..\Users\Win\Downloads\ub_stm32f4_irmp_v100\ub_lib\irmp_lolevel\irmp.c" lastModified="13e89180970"/>
+      </target>
+      <target file="stm32f4xx_tim.o" lastModified="15b2e18dbd3">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_tim.c" lastModified="158815bf6e7"/>
+      </target>
+      <target file="system_stm32f4xx.o" lastModified="15b2e18d66f">
+         <source file="..\..\..\cmsis_boot\system_stm32f4xx.c" lastModified="1588164fd9f"/>
+      </target>
+      <target file="startup_stm32f4xx.o" lastModified="15b2e18cf77">
+         <source file="..\..\..\cmsis_boot\startup\startup_stm32f4xx.c" lastModified="15881502a3d"/>
+      </target>
+      <target file="stm32f4xx_usart.o" lastModified="15b2e18ca41">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_usart.c" lastModified="159d9fc315c"/>
+      </target>
+      <target file="stm32f4xx_syscfg.o" lastModified="15b2e18c6b7">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_syscfg.c" lastModified="1588354c892"/>
+      </target>
+      <target file="stm32_ub_led.o" lastModified="15b2e18d0ac">
+         <source file="..\..\..\..\..\..\..\Users\Win\Downloads\ub_stm32f4_irmp_v100\ub_lib\stm32_ub_led.c" lastModified="13cc5966f60"/>
+      </target>
+      <target file="stm32f4xx_exti.o" lastModified="15b2e18d902">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_exti.c" lastModified="15883543130"/>
+      </target>
+      <target file="main.o" lastModified="15b2ed7183b">
+         <source file="..\..\..\main.c" lastModified="15b2ed711b3"/>
+      </target>
+      <target file="stm32f4xx_dac.o" lastModified="15b2e18cc07">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_dac.c" lastModified="159d9fed01c"/>
+      </target>
+      <target file="stm32f4xx_spi.o" lastModified="15b2e18d81b">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_spi.c" lastModified="159d9ff8b5b"/>
+      </target>
+      <target file="stm32_ub_irmp.o" lastModified="15b2e62ef6f">
+         <source file="..\..\..\..\..\..\..\Users\Win\Downloads\ub_stm32f4_irmp_v100\ub_lib\stm32_ub_irmp.c" lastModified="13e89163c80"/>
+      </target>
+      <target file="stm32f4xx_rcc.o" lastModified="15b2e18d354">
+         <source file="..\..\..\cmsis_lib\source\stm32f4xx_rcc.c" lastModified="15881502b29"/>
+      </target>
+      <target file="misc.o" lastModified="15b2e18da20">
+         <source file="..\..\..\cmsis_lib\source\misc.c" lastModified="1588356a635"/>
+      </target>
+   </processor>
+</history>
