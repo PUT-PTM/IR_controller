@@ -49,8 +49,6 @@ int main (void)
 {
 	SystemInit();
 
-	//IRMP_DATA  myIRData;
-
 	  UB_Led_Init(); //inicjuje diody LED
 
 	  UB_IRMP_Init(); //inicjuje IR
@@ -86,24 +84,5 @@ int main (void)
 
 	while(1)
 	{
-
-	   /*if(przycisk==68) UB_Led_On(LED_GREEN); //else UB_Led_Off(LED_GREEN);
-	   if(przycisk==64) UB_Led_On(LED_RED); //else UB_Led_Off(LED_RED);
-
-	   if(UB_IRMP_Read(&myIRData)==TRUE) //jesli odebrano dane
-	    {
-	      if(myIRData.address==65280)
-	      {
-	    	  // przycisk "<<" - za³¹czenie silnika, zwijanie rolety
-	    		  if(myIRData.command==68) przycisk=68; //UB_Led_On(LED_GREEN);else UB_Led_Off(LED_GREEN);
-	    	  // przycisk ">>" - za³¹czenie silnika, rozwijanie rolety
-	    		  if(myIRData.command==64) przycisk=64; //UB_Led_On(LED_RED);else UB_Led_Off(LED_RED);
-	      }
-	    }
-	    else {
-			przycisk=0;
-			UB_Led_Off(LED_GREEN);
-			UB_Led_Off(LED_RED);
-		}*/
 	}
 }
