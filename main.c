@@ -24,16 +24,18 @@ void TIM3_IRQHandler(void)
          	if(TIM_GetITStatus(TIM3, TIM_IT_Update) != RESET)
          	{
          		       if(przycisk==64||przycisk==70)
-         		    	   if(wysokosc<56)
+         		    	   if(wysokosc<78)
          		    	   {
          		    		   UB_Led_On(LED_GREEN);
-         		    		   wysokosc=wysokosc+1.5;//else UB_Led_Off(LED_GREEN);
+         		    		   UB_Led_Off(LED_RED);
+         		    		   wysokosc=wysokosc+1.6;//else UB_Led_Off(LED_GREEN);
          		    	   }
 
          		       if(przycisk==68||przycisk==69)
          		    	  if(wysokosc>0)
          		    	  {
          		    	        UB_Led_On(LED_RED);
+         		    	        UB_Led_Off(LED_GREEN);
          		    	        wysokosc--;//else UB_Led_Off(LED_RED);
          		    	  }
 
@@ -49,10 +51,9 @@ void TIM3_IRQHandler(void)
          			    		  //69 CH-
          			    		  //70 CH
          			    		  if(myIRData.command==9)
-         			    			  {
-         			    			  if(przycisk!=9) przycisk=9;
-         			    			  else przycisk=0;
-         			    			  }
+         			    		  {
+         			    		   TIM_Cmd(TIM4, ENABLE);
+         			    		  }
          			    		 if(myIRData.command==70) przycisk=70;
          			    		 if(myIRData.command==69) przycisk=69;
          			      }
@@ -64,10 +65,10 @@ void TIM3_IRQHandler(void)
          					UB_Led_Off(LED_RED);
          				}
 
-         			   if(wysokosc>=56)
+         			   if(wysokosc>=78)
          			   {
          				   UB_Led_Off(LED_GREEN);
-         				   wysokosc=56;
+         				   wysokosc=78;
          			   }
            			   if(wysokosc<=0)
            			   {
@@ -82,10 +83,10 @@ void TIM3_IRQHandler(void)
 						 UB_Led_On(LED_BLUE);
 
 						 //ponizej 1.25 rozwija sie
-						 if(ADC_Result<=1.25&&wysokosc<56)
+						 if(ADC_Result<=1.25&&wysokosc<78)
 						 {
 							UB_Led_On(LED_GREEN);
-							wysokosc=wysokosc+1.5;
+							wysokosc=wysokosc+1.6;
 						 }
 						 else UB_Led_Off(LED_GREEN);
 						 if(ADC_Result>2.0&&wysokosc>0)
@@ -102,13 +103,28 @@ void TIM3_IRQHandler(void)
          	}
 }
 
+void TIM4_IRQHandler(void)
+{
+	 	if(TIM_GetITStatus(TIM4, TIM_IT_Update) != RESET)
+         	{
+         		if(przycisk!=9) przycisk=9;
+         		else przycisk=0;
+         		TIM_Cmd(TIM4, DISABLE);
+
+           		// wyzerowanie flagi wyzwolonego przerwania
+                TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
+
+                //TIM_Cmd(TIM4, DISABLE);
+         	}
+}
+
 int main (void)
 {
 	  SystemInit();
 	  UB_Led_Init(); //inicjuje diody LED
 	  UB_IRMP_Init(); //inicjuje IR
 
-	  //timer 4 do sterowania rolet¹==============================
+	  //timer 3 do sterowania rolet¹==============================
 	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM3, ENABLE);
 	  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
 	  TIM_TimeBaseStructure.TIM_Period = 1050-1;
@@ -116,7 +132,6 @@ int main (void)
 	  TIM_TimeBaseStructure.TIM_ClockDivision = TIM_CKD_DIV1;
 	  TIM_TimeBaseStructure.TIM_CounterMode =  TIM_CounterMode_Up;
 	  TIM_TimeBaseInit(TIM3, &TIM_TimeBaseStructure);
-	  //==========================================================
 
 	  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
 	  NVIC_InitTypeDef NVIC_InitStructure;
@@ -136,8 +151,38 @@ int main (void)
 	  TIM_ITConfig(TIM3, TIM_IT_Update, ENABLE);
 
 	  TIM_Cmd(TIM3, ENABLE);
+	  //TIM3==========================================================
 
-	  //ADC=================================================
+	  //timer 4 drgania styku===========================
+	  RCC_APB1PeriphClockCmd(RCC_APB1Periph_TIM4, ENABLE);
+	  TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure2;
+	  TIM_TimeBaseStructure2.TIM_Period = 2100-1;
+	  TIM_TimeBaseStructure2.TIM_Prescaler = 10000-1;
+	  TIM_TimeBaseStructure2.TIM_ClockDivision = TIM_CKD_DIV1;
+	  TIM_TimeBaseStructure2.TIM_CounterMode =  TIM_CounterMode_Up;
+	  TIM_TimeBaseInit(TIM4, &TIM_TimeBaseStructure2);
+
+	  NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+	  NVIC_InitTypeDef NVIC_InitStructure2;
+	  // numer przerwania
+	  NVIC_InitStructure2.NVIC_IRQChannel = TIM4_IRQn;
+	  // priorytet g³ówny
+	  NVIC_InitStructure2.NVIC_IRQChannelPreemptionPriority = 0x00;
+	  // subpriorytet
+	  NVIC_InitStructure2.NVIC_IRQChannelSubPriority = 0x00;
+	  // uruchom dany kana³
+	  NVIC_InitStructure2.NVIC_IRQChannelCmd = ENABLE;
+	  // zapisz wype³nion¹ strukturê do rejestrów
+	  NVIC_Init(&NVIC_InitStructure2);
+	  // wyczyszczenie przerwania od timera 3 (wyst¹pi³o przy konfiguracji timera)
+	  TIM_ClearITPendingBit(TIM4, TIM_IT_Update);
+	  // zezwolenie na przerwania od przepe³nienia dla timera 3
+	  TIM_ITConfig(TIM4, TIM_IT_Update, ENABLE);
+
+	  //TIM_Cmd(TIM4, ENABLE);
+	  //TIM4==========================================================
+
+	  //ADC do fotorezystora=========================================
 	  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA , ENABLE); // zegar dla portu GPIO z którego wykorzystany zostanie pin jako wejœcie ADC (PA1)
 	  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE); // zegar dla modu³u ADC1
 
@@ -182,9 +227,9 @@ int main (void)
 	  ADC_RegularChannelConfig(ADC1, ADC_Channel_1, 1, ADC_SampleTime_84Cycles);
 
 	  ADC_Cmd(ADC1, ENABLE);
+      //ADC====================================================
 
 	while(1)
 	{
-
 	}
 }
